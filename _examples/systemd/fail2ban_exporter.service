@@ -1,9 +1,0 @@
-[Unit]
-Description=Fail2Ban Exporter
-
-[Service]
-User=fail2ban_exporter
-ExecStart=/usr/sbin/fail2ban_exporter
-
-[Install]
-WantedBy=multi-user.target

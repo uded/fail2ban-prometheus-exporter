@@ -76,6 +76,48 @@ docker_manifests:
   - 'registry.gitlab.com/hectorjsmith/fail2ban-prometheus-exporter:latest-amd64'
   - 'registry.gitlab.com/hectorjsmith/fail2ban-prometheus-exporter:latest-arm64'
 
+nfpms:
+- id: prometheus-fail2ban-exporter
+  
+  package_name: prometheus-fail2ban-exporter
+  
+  vendor: hectorjsmith
+  
+  homepage: https://gitlab.com/hectorjsmith/fail2ban-prometheus-exporter
+  
+  maintainer: hectorjsmith <[email protected]>
+  
+  description: |-
+    Collect metrics from a running fail2ban instance.
+  
+  license: MIT License
+  
+  formats:
+#    - apk
+    - deb
+
+  section: net
+
+  dependencies:
+    - adduser
+
+  contents:
+    - src: "{{ .ArtifactPath }}"
+      dst: /usr/bin/prometheus-fail2ban-exporter
+    - src: README.md
+      dst: /usr/share/doc/prometheus-fail2ban-exporter/README.md
+    - src: LICENSE
+      dst: /usr/share/doc/prometheus-fail2ban-exporter/copyright
+    - src: _system/default
+      dst: /etc/default/prometheus-fail2ban-exporter
+    - src: _system/systemd/prometheus-fail2ban-exporter.service
+      dst: /lib/systemd/system/prometheus-fail2ban-exporter.service
+
+  scripts:
+    postinstall: "_system/postinst"
+    preremove: "_system/prerm"
+    postremove: "_system/postrm"
+
 changelog:
   groups:
     - title: "⛔ Breaking Changes"
